@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+	"name": "Reflect Gatsby",
+	"version": "0.0.1",
+	"browser_action": {
+		"name": "Open Chexgt",
+		"default_title": "Launch Chexgt",
+		"default_popup": "index.html"
+	},
+	"chrome_url_overrides" : {
+    "newtab": "index.html"
+	},
+	"permissions": [
+		"tabs", "storage", "activeTab", "contextMenus", "history", "identity"
+	],
+	"background": {
+    "persistent": false,
+    "page": "backgroundPage.html"
+	},
+	"content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
+  "oauth2": {
+    "client_id": "170827625182-onf6agrqpr9hho54df32plic3sk9v6qe.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt3zFzD2QLTbcnShvRirAYMkH8J5HTJ6MX5GpVOuMzTslDXGePc2ZW9S5Bkkf78Nviz8q/q4ybtRMBpZuMZqAgE8OqkvghJSaIhKpjwb6xvJ1OuKzDj5UvEKUcULOPSBMKSAZ2YlY/Tm3kOwTWQk+bUYt6oG6TmZVVidd6Rxb3Eh1wQsg07TWKMcHVojWzcRvH/EFbSzsxvvjfxzF6LgumXhHtgX5/gDTgKkJSuVKt6aMpQxNbhbRKF1R9YN9qWNAjV5tkHBRq2FO4B7LFvZIEUAeAjICdsVeFB5YIddNVfF9sWPz1qgNtcZ2K07O8UtWcV7q/cWi79NAvX/Jv+QtGQIDAQAB"
+}
