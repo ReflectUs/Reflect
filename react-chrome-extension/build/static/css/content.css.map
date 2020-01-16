@@ -1,0 +1,1 @@
+{"version":3,"sources":["content.css"],"names":[],"mappings":"AAAA;;AAEA;AACA;AACA;;AAEA;AACA;AACA,C","file":"static/css/content.css","sourcesContent":["/* src/content.css */\n\n.my-extension{\n    padding: 20px;\n}\n\n.my-extension h1{\n    color: #000;\n}"],"sourceRoot":""}
