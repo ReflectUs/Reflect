@@ -1,23 +1,29 @@
 {
+  "short_name": "My Extension",
+  "name": "My Extension",
+  "version": "1.0",
   "manifest_version": 2,
-	"name": "Reflect Gatsby",
-	"version": "0.0.1",
-	"browser_action": {
-		"name": "Open Chexgt",
-		"default_title": "Launch Chexgt",
-		"default_popup": "index.html"
-	},
-	"chrome_url_overrides" : {
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+  "permissions": [
+    "tabs"
+  ],
+  "chrome_url_overrides" : {
     "newtab": "index.html"
 	},
-	"permissions": [
-		"tabs", "storage", "activeTab", "contextMenus", "history", "identity"
-	],
-	"background": {
-    "persistent": false,
-    "page": "backgroundPage.html"
-	},
-	"content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
+  "browser_action": {},
+  "content_scripts" : [
+    {
+      "matches": [ "<all_urls>" ],
+      "css": ["/static/css/app.css"],
+      "js": ["/static/js/content.js"]
+    }
+  ],
+  "web_accessible_resources":[
+    "/static/css/content.css"
+  ],
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {
     "client_id": "170827625182-onf6agrqpr9hho54df32plic3sk9v6qe.apps.googleusercontent.com",
     "scopes": [
