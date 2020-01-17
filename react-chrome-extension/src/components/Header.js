@@ -10,10 +10,12 @@ const HeaderDiv = styled.div`
   height: 15vh;
   background-color: #CCC;
   opacity: 0.4;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
 
 `
-
-
 export default class Header extends Component {
   render() {
     return (
