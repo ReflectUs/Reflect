@@ -177,9 +177,16 @@ chrome.tabs.onUpdated.addListener(function(tabID, changeInfo, tab) {
 // }
 
 function writeWebsiteData(userID, website, time) {
-  firebase.database().ref('chrome/' + userID + '/websiteTime/' + website).set({
-    time: time
-  })
+  var timeRef = firebase.database().ref('chrome/' + userID + '/websiteTime/' + website)
+//   var currValue;
+  timeRef.set({
+     time: time
+  });
+//   timeRef.once('value').then(function(snapshot) {
+//      currValue = snapshot.val() + time;
+//   }).set({
+//    time: currValue
+//   });
 }
 
 function createUser(userID, name, email, photoURL, created_at) {
