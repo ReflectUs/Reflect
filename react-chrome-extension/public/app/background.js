@@ -95,9 +95,6 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 function printWebsites() {
-  console.log("/////////////////////");
-  console.log("");
-  console.log("/////////////////////");
   for(var i = 0; i < websites.length; i++) {
     websites[i].print();
   }

@@ -1,6 +1,6 @@
 {
-  "short_name": "My Extension",
-  "name": "My Extension",
+  "short_name": "ReflectMe",
+  "name": "ReflectMe",
   "version": "1.0",
   "manifest_version": 2,
   "permissions": [

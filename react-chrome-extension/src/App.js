@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import styled from 'styled-components'
-import wall0 from './assets/wall0.png';
-import wall1 from './assets/wall1.jpg';
-import wall2 from './assets/wall2.jpg';
-import wall3 from './assets/wall3.jpg';
 
 // components
 import Header from './components/Header';
@@ -27,7 +23,7 @@ class App extends Component {
   render() {
     return (
       <BackgroundDiv>
-        <Header/>
+        {/* <Header/> */}
         <Greeting/>
       </BackgroundDiv>
     );

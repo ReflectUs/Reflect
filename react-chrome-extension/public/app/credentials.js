@@ -36,6 +36,10 @@ function initApp() {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
+
+      // save to localStorage
+      localStorage.setItem('name', displayName);
+
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';

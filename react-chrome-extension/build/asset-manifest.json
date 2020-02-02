@@ -8,9 +8,5 @@
   "content.css.map": "/static/css/content.css.map",
   "content.js.map": "/static/js/content.js.map",
   "index.html": "/index.html",
-  "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg",
-  "static/media/wall0.png": "/static/media/wall0.9d636129.png",
-  "static/media/wall1.jpg": "/static/media/wall1.c33afd60.jpg",
-  "static/media/wall2.jpg": "/static/media/wall2.567eb148.jpg",
-  "static/media/wall3.jpg": "/static/media/wall3.867e1d48.jpg"
+  "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
 }
