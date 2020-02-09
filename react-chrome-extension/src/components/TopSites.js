@@ -4,17 +4,19 @@ import styled from 'styled-components'
 import TopSiteEntry from './TopSiteEntry';
 import { db } from '../firebase'
 
-
-
 const TopSites = () => {
   const [topSites, setTopSites] = useState([]);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     let uid = localStorage.getItem("uid");
     db.ref('topSites/' + uid)
       .once("value", function(snapshot) {
         console.log(snapshot.val());
       });
+=======
+    console.log("init");
+>>>>>>> Stashed changes
   });
 
   const Wrapper = styled.div`

@@ -96,8 +96,8 @@ function startSignIn() {
   document.getElementById('quickstart-button').disabled = true;
   if (firebase.auth().currentUser) {
     firebase.auth().signOut();
-    localStorage.setItem('name', 'null');
-    localStorage.setItem('uid', 'null');
+    localStorage.setItem('name', null);
+    localStorage.setItem('uid', null);
   } else {
     startAuth(true);
   }
