@@ -39,7 +39,7 @@ function initApp() {
 
       // save to localStorage
       localStorage.setItem('name', displayName);
-      localStorage.setItem('signedIn', true);
+      localStorage.setItem('uid', uid);
 
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
@@ -96,6 +96,8 @@ function startSignIn() {
   document.getElementById('quickstart-button').disabled = true;
   if (firebase.auth().currentUser) {
     firebase.auth().signOut();
+    localStorage.setItem('name', 'null');
+    localStorage.setItem('uid', 'null');
   } else {
     startAuth(true);
   }

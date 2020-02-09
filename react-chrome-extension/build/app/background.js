@@ -54,7 +54,7 @@ WebsiteItem.prototype.isWebsite = function(url) {
 };
 
 WebsiteItem.prototype.clearID = function(currTime) {
-  this.totalTime += Math.round((currTime - this.oTime)/1000.0);
+  this.totalTime = Math.round((currTime - this.oTime)/1000.0);
   this.oTime = -1;
   this.tabID = -1;
   if(this.website != "") {
@@ -181,15 +181,16 @@ function writeWebsiteData(userID, website, time) {
   let now = new Date().toLocaleString();
 
   timeRef.once("value", function(snapshot) {
-      var exists = snapshot.val() !== null;
-      if(exists) {
+      let exists = snapshot.val() !== null;
+      let loggedIn = localStorage.getItem('uid');
+      if(exists && (userID) && (loggedIn)) {
         let websiteTime = snapshot.val().time;
         timeRef.set({
           website: website,
           time: websiteTime+time, 
           lastUpdated: now
        });
-    } else {
+    } else if((userID) && (loggedIn)) {
       timeRef.set({
         website: website,
         time: time, 
