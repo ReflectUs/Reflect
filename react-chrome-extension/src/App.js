@@ -6,6 +6,7 @@ import styled from 'styled-components'
 // components
 import Header from './components/Header';
 import Greeting from './components/Greeting';
+import TopSites from './components/TopSites';
 
 const BackgroundDiv = styled.div`
   background-image: url("https://source.unsplash.com/1600x900/?nature");
@@ -32,6 +33,7 @@ const BackgroundDiv = styled.div`
     left: 0;
     background-color: #000000;
     opacity: 0.3;
+    z-index: 0;
   }
 
 `
@@ -42,6 +44,7 @@ class App extends Component {
       <BackgroundDiv>
         {/* <Header/> */}
         <Greeting/>
+        <TopSites/>
       </BackgroundDiv>
     );
   }
