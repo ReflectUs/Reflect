@@ -17,6 +17,23 @@ const BackgroundDiv = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  -webkit-transition: background 1.5s linear;
+  -moz-transition: background 1.5s linear;
+  -o-transition: background 1.5s linear;
+  -ms-transition: background 1.5s linear;
+  transition: background 1.5s linear;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    opacity: 0.3;
+  }
+
 `
 
 class App extends Component {

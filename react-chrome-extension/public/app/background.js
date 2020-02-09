@@ -77,13 +77,9 @@ WebsiteItem.prototype.isActive = function() {
 };
 
 
-
 // WebsiteItem definition ends
 ///////////////////////////______________________________________////////////////////////////
 // Event Listeners begin
-
-
-
 
 
 chrome.runtime.onInstalled.addListener(function() {
