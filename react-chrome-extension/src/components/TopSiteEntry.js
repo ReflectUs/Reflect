@@ -28,7 +28,7 @@ export default class TopSiteEntry extends Component {
 
     return (
       <Block>
-        {site}, {time}
+        {site}: {time}
       </Block>
     )
   }

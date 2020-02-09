@@ -1,22 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-import TopSiteEntry from './TopSiteEntry';
-import { db } from '../firebase'
+import TopSiteEntry from "./TopSiteEntry";
+import { db } from "../firebase";
 
 const TopSites = () => {
   const [topSites, setTopSites] = useState([]);
+  const [recievedData, setRecievedData] = useState(false);
+
+  function getMonday() {
+    let d = new Date();
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  }
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    let uid = localStorage.getItem("uid");
-    db.ref('topSites/' + uid)
-      .once("value", function(snapshot) {
-        console.log(snapshot.val());
+    if (!recievedData) {
+      let uid = localStorage.getItem("uid");
+      let date = getMonday()
+        .toLocaleString()
+        .split(",")[0]
+        .replace(new RegExp("/", "gi"), "-");
+      db.ref("topSites/" + uid + "/" + date).once("value", function(snapshot) {
+        setTopSites(Object.entries(snapshot.val()));
+        setRecievedData(true);
+        console.log(topSites);
       });
-=======
-    console.log("init");
->>>>>>> Stashed changes
+    }
   });
 
   const Wrapper = styled.div`
@@ -35,19 +46,21 @@ const TopSites = () => {
     right: 20px;
   `;
 
-  var topSiteData = [
-    ["Amazon.com", "42"],
-    ["Test.org", "12044"]
-  ]
   return (
     <Wrapper>
-      <h2 style={{
-        opacity: "1"
-      }}>Top Sites</h2>
-      <TopSiteEntry site={topSiteData[0][0]} time={topSiteData[0][1]} />
-      <TopSiteEntry site={topSiteData[1][0]} time={topSiteData[1][1]} />
+      <h2
+        style={{
+          opacity: "1"
+        }}
+      >
+        Top Sites
+      </h2>
+      {topSites.map((site) => {
+        return <TopSiteEntry site={site[1].website} time={site[1].time} />
+      }
+      )}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default TopSites;
