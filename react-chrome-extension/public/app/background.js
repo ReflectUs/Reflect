@@ -8,6 +8,11 @@ var photoURL;
 var name;
 
 WebsiteItem.prototype.getWebsiteFromUrl = (url) => {
+  console.log(url);
+  if(url.includes("chrome-extension://") || url.includes("://newtab")) {
+    console.log("chrome-extension");
+    return "chrome-extension";
+  }
   var posStart = url.indexOf("www.");
   var offSetStart = 4;
   if(posStart == -1) {
