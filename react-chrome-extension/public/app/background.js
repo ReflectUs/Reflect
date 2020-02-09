@@ -167,7 +167,7 @@ var db = firebase.database();
 
 // get first day of the current week!
 function getMonday() {
-  d = new Date();
+  let d = new Date();
   var day = d.getDay(),
       diff = d.getDate() - day + (day == 0 ? -6:1); 
   return new Date(d.setDate(diff));
