@@ -39,6 +39,7 @@ function initApp() {
 
       // save to localStorage
       localStorage.setItem('name', displayName);
+      localStorage.setItem('signedIn', true);
 
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';

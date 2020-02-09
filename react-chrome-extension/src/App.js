@@ -8,8 +8,9 @@ import Header from './components/Header';
 import Greeting from './components/Greeting';
 import TopSites from './components/TopSites';
 
+// can you animate this (fade-in) + cache the image for the day? 
 const BackgroundDiv = styled.div`
-  background-image: url("https://source.unsplash.com/1600x900/?nature");
+  background-image: url("https://source.unsplash.com/random?nature");
   width: 100vw;
   height: 100vh;
   padding: 0;
@@ -18,11 +19,6 @@ const BackgroundDiv = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  -webkit-transition: background 1.5s linear;
-  -moz-transition: background 1.5s linear;
-  -o-transition: background 1.5s linear;
-  -ms-transition: background 1.5s linear;
-  transition: background 1.5s linear;
 
   &:before {
     content: '';

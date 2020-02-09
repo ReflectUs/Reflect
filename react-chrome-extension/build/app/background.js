@@ -1,3 +1,4 @@
+// WebsiteItem 
 
 var websites = [];
 var email = "";
@@ -6,14 +7,14 @@ var displayName;
 var photoURL;
 var name;
 
-WebsiteItem.prototype.getWebsiteFromUrl = function(url) {
+WebsiteItem.prototype.getWebsiteFromUrl = (url) => {
   var posStart = url.indexOf("www.");
   var offSetStart = 4;
   if(posStart == -1) {
     posStart = url.indexOf("://");
     offSetStart = 3;
   }
-  var posEnd = url.indexOf(".", posStart + offSetStart);
+  var posEnd = url.indexOf("/", posStart + offSetStart);
   var website = "";
   if(posStart != -1 && posEnd != -1) {
     website = url.substring(posStart+offSetStart, posEnd);
@@ -23,7 +24,7 @@ WebsiteItem.prototype.getWebsiteFromUrl = function(url) {
 
 function WebsiteItem(url, tabID, oTime) {
     this.website = this.getWebsiteFromUrl(url);
-    this.tabID = tabID
+    this.tabID = tabID;
     this.oTime = oTime;
     this.totalTime = 0;
 }
@@ -77,27 +78,21 @@ WebsiteItem.prototype.isActive = function() {
 };
 
 
+// Chrome Event Listeners
 
-// WebsiteItem definition ends
-///////////////////////////______________________________________////////////////////////////
-// Event Listeners begin
-
-
-
-
+// CHECK FOR THIS befre you push!!!
+// localStorage.setItem('signedIn', true);
 
 chrome.runtime.onInstalled.addListener(function() {
-   chrome.contextMenus.create({
-     "id": "sampleContextMenu",
-     "title": "Sample Context Menu",
-     "contexts": ["selection"]
-   });
+  chrome.contextMenus.create({
+    "id": "sampleContextMenu",
+    "title": "Sample Context Menu",
+    "contexts": ["selection"]
+  });
 });
 
+
 function printWebsites() {
-  console.log("/////////////////////");
-  console.log("");
-  console.log("/////////////////////");
   for(var i = 0; i < websites.length; i++) {
     websites[i].print();
   }
@@ -128,7 +123,6 @@ function updateWebsiteItem(newTabID) {
 chrome.tabs.onActivated.addListener(function(tabDetails) {
   // tabDetails is an object
   updateWebsiteItem(tabDetails.tabId);
-
 });
 
 chrome.tabs.onRemoved.addListener(function(tabID, removeInfo) {
@@ -142,8 +136,6 @@ chrome.tabs.onRemoved.addListener(function(tabID, removeInfo) {
 });
 
 chrome.tabs.onCreated.addListener(function(tab) {
-  // var temp = new WebsiteItem(tab.url, tab.id, new Date());
-  // console.log(tab);
   var temp = new WebsiteItem(tab.url, tab.id, new Date());
   var alreadyExists = false;
   for(var i = 0; i < websites.length; i++) {
@@ -163,30 +155,48 @@ chrome.tabs.onUpdated.addListener(function(tabID, changeInfo, tab) {
 });
 
 
+// FirebaseDB Functions
 
+var config = {
+  apiKey: 'AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ',
+  databaseURL: 'https://reflect-me-mhacks.firebaseio.com',
+  storageBucket: 'reflect-me-mhacks.appspot.com'
+};
+firebase.initializeApp(config);
+var db = firebase.database();
 
+// get first day of the current week!
+function getMonday() {
+  d = new Date();
+  var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1); 
+  return new Date(d.setDate(diff));
+}
 
-//////// Writing Data Firebase /////////
-
-// function writeUserData(userID, name, email, photoURL) {
-//   firebase.database().ref('users/' + userID).set({
-//     email: email,
-//     photoURL: photoURL,
-//     name: name
-//   });
-// }
 
 function writeWebsiteData(userID, website, time) {
-  var timeRef = firebase.database().ref('chrome/' + userID + '/websiteTime/' + website)
-//   var currValue;
-  timeRef.set({
-     time: time
+  let date = getMonday().toLocaleString().split(',')[0].replace(new RegExp('/','gi'), "-");
+  let websiteRef = website.replace(new RegExp("[.]","gi"), "-");
+  var timeRef = firebase.database().ref('topSites/' + userID + "/" + date + "/" + websiteRef);
+  let now = new Date().toLocaleString();
+
+  timeRef.once("value", function(snapshot) {
+      var exists = snapshot.val() !== null;
+      if(exists) {
+        let websiteTime = snapshot.val().time;
+        timeRef.set({
+          website: website,
+          time: websiteTime+time, 
+          lastUpdated: now
+       });
+    } else {
+      timeRef.set({
+        website: website,
+        time: time, 
+        lastUpdated: now
+     });
+    }
   });
-//   timeRef.once('value').then(function(snapshot) {
-//      currValue = snapshot.val() + time;
-//   }).set({
-//    time: currValue
-//   });
 }
 
 function createUser(userID, name, email, photoURL, created_at) {
@@ -211,20 +221,6 @@ function createUser(userID, name, email, photoURL, created_at) {
       }
     });
 }
-
-
-
-///////////////////////// Firebase OAuth Stuff /////////////////////////
-
-// using Reflectme database
-var config = {
-  apiKey: 'AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ',
-  databaseURL: 'https://reflect-me-mhacks.firebaseio.com',
-  storageBucket: 'reflect-me-mhacks.appspot.com'
-};
-firebase.initializeApp(config);
-var db = firebase.database();
-
 
 function initApp() {
   // Listen for auth state changes.
