@@ -24,8 +24,11 @@ const TopSites = () => {
         .replace(new RegExp("/", "gi"), "-");
       db.ref("topSites/" + uid + "/" + date).once("value", function(snapshot) {
         setTopSites(Object.entries(snapshot.val()));
+        setTopSites(topSites
+        .sort(function(a, b) {
+          return a[1].time - b[1].time;
+        }));
         setRecievedData(true);
-        console.log(topSites);
       });
     }
   });
@@ -53,12 +56,11 @@ const TopSites = () => {
           opacity: "1"
         }}
       >
-        Top Sites
+        Top Sites{" "}
       </h2>
-      {topSites.map((site) => {
-        return <TopSiteEntry site={site[1].website} time={site[1].time} />
-      }
-      )}
+      {topSites.reverse().slice(0,5).map(site => {
+          return <TopSiteEntry site={site[1].website} time={site[1].time} />;
+        })}
     </Wrapper>
   );
 };
