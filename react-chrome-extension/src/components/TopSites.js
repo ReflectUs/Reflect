@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TopSiteEntry from './TopSiteEntry';
+import db from '../firebase'
 
 
 
 const TopSites = () => {
+  const [topSites, setTopSites] = useState([]);
+
+  useEffect(() => {
+    console.log("init");
+  }
 
   const Wrapper = styled.div`
     border-radius: 20px;
