@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TopSiteEntry from './TopSiteEntry';
-import db from '../firebase'
+import { db } from '../firebase'
 
 
 
@@ -10,8 +10,12 @@ const TopSites = () => {
   const [topSites, setTopSites] = useState([]);
 
   useEffect(() => {
-    console.log("init");
-  }
+    let uid = localStorage.getItem("uid");
+    db.ref('topSites/' + uid)
+      .once("value", function(snapshot) {
+        console.log(snapshot.val());
+      });
+  });
 
   const Wrapper = styled.div`
     border-radius: 20px;
