@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 2,
   "permissions": [
-    "tabs", "storage", "activeTab", "contextMenus", "history", "identity"
+    "tabs", "storage", "activeTab", "contextMenus", "history", "identity", "idle"
   ],
   "browser_action": {
     "default_popup": "popup.html"

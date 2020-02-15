@@ -8,7 +8,6 @@ var photoURL;
 var name;
 
 WebsiteItem.prototype.getWebsiteFromUrl = (url) => {
-  console.log(url);
   if(url.includes("chrome-extension://") || url.includes("://newtab")) {
     console.log("chrome-extension");
     return "chrome-extension";
@@ -157,6 +156,20 @@ chrome.tabs.onCreated.addListener(function(tab) {
 
 chrome.tabs.onUpdated.addListener(function(tabID, changeInfo, tab) {
   updateWebsiteItem(tab.id);
+});
+
+chrome.idle.setDetectionInterval(15);
+
+chrome.idle.onStateChanged.addListener(function(newState) {
+  // if(newState == "idle") {
+  //   console.log("idle");
+  // } else if(newState = "locked") {
+  //   console.log("locked" + new Date());
+  // } 
+  // if(newState = "active") {
+  //   console.log("active" + new Date())
+  // }
+  console.log(newState);
 });
 
 
