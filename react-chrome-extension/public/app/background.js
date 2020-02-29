@@ -161,14 +161,13 @@ chrome.tabs.onUpdated.addListener(function(tabID, changeInfo, tab) {
 chrome.idle.setDetectionInterval(15);
 
 chrome.idle.onStateChanged.addListener(function(newState) {
-  // if(newState == "idle") {
-  //   console.log("idle");
-  // } else if(newState = "locked") {
-  //   console.log("locked" + new Date());
-  // } 
-  // if(newState = "active") {
-  //   console.log("active" + new Date())
-  // }
+  if(newState == "idle") {
+    console.log("idle " + new Date());
+  } else if(newState == "active") {
+    console.log("active " + new Date());
+  } else if(newState == "locked") {
+    console.log("locked " + new Date());
+  } 
   console.log(newState);
 });
 
