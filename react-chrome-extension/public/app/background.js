@@ -6,6 +6,7 @@ var userID;
 var displayName;
 var photoURL;
 var name;
+var websiteItemStore;
 
 WebsiteItem.prototype.getWebsiteFromUrl = (url) => {
   if(url.includes("chrome-extension://") || url.includes("://newtab")) {
@@ -22,6 +23,8 @@ WebsiteItem.prototype.getWebsiteFromUrl = (url) => {
   var website = "";
   if(posStart != -1 && posEnd != -1) {
     website = url.substring(posStart+offSetStart, posEnd);
+  } else {
+    return url;
   }
   return website;
 };
@@ -58,11 +61,13 @@ WebsiteItem.prototype.isWebsite = function(url) {
 };
 
 WebsiteItem.prototype.clearID = function(currTime) {
-  this.totalTime = Math.round((currTime - this.oTime)/1000.0);
-  this.oTime = -1;
-  this.tabID = -1;
-  if(this.website != "") {
-    writeWebsiteData(userID, this.website, this.totalTime);
+  if(this.oTime != -1) {
+    this.totalTime = Math.round((currTime - this.oTime)/1000.0);
+    this.oTime = -1;
+    this.tabID = -1;
+    if(this.website != "") {
+      writeWebsiteData(userID, this.website, this.totalTime);
+    }
   }
 };
 
@@ -81,6 +86,28 @@ WebsiteItem.prototype.isActive = function() {
   return this.tabID != -1;
 };
 
+WebsiteItem.prototype.getID = function() {
+  return this.id;
+}
+
+function storeWebsiteItem(websiteItem) {
+  console.log(websiteItem.website);
+  websiteItemStore = new WebsiteItem(websiteItem.website, websiteItem.tabID, -1);
+  console.log("Before clearing:");
+  websiteItemStore.print();
+}
+
+function getStoredWebsiteItem() {
+  if(websiteItemStore) {
+    temp = websiteItemStore;
+    websiteItemStore = null;
+    return temp;
+  } else {
+    console.log("Error Stored Website item not there");
+  }
+}
+
+
 
 // Chrome Event Listeners
 
@@ -97,6 +124,8 @@ chrome.runtime.onInstalled.addListener(function() {
 
 
 function printWebsites() {
+  console.log("////////////");
+  console.log("");
   for(var i = 0; i < websites.length; i++) {
     websites[i].print();
   }
@@ -158,18 +187,45 @@ chrome.tabs.onUpdated.addListener(function(tabID, changeInfo, tab) {
   updateWebsiteItem(tab.id);
 });
 
-chrome.idle.setDetectionInterval(15);
+// chrome.idle.setDetectionInterval(15); // uncomment for testing, 15 is least value
 
-chrome.idle.onStateChanged.addListener(function(newState) {
-  if(newState == "idle") {
-    console.log("idle " + new Date());
-  } else if(newState == "active") {
-    console.log("active " + new Date());
-  } else if(newState == "locked") {
-    console.log("locked " + new Date());
-  } 
-  console.log(newState);
-});
+
+// TODO: Fix stored Website Item
+// chrome.idle.onStateChanged.addListener(function(newState) {
+//   var idle = false;
+//   var active = false;
+//   var locked = false;
+//   if(newState == "idle") {
+//     console.log("idle " + new Date());
+//     idle = true;
+//   } else if(newState == "active") {
+//     console.log("active " + new Date());
+//     active = true;
+//   } else if(newState == "locked") {
+//     console.log("locked " + new Date());
+//     locked = true;
+//   } 
+//   if(locked || idle) {
+//     for(var i = 0; i < websites.length; i++) {
+//       if(websites[i].isActive()) {
+//           storeWebsiteItem(websites[i]);
+//           websites[i].clearID(new Date());
+//           console.log("After clearing:");
+//           websiteItemStore.print();
+//           printWebsites();
+//       } 
+//     }
+//   } else if(active) { 
+//     tempWebsiteItem = getStoredWebsiteItem();
+//     tempWebsiteItem.print();
+//     for(var i = 0; i < websites.length; i++) {
+//       if(tempWebsiteItem.equals(websites[i])) {
+//           websites[i].setID(tempWebsiteItem.getID(), new Date());
+//           printWebsites();
+//       } 
+//     }
+//   }
+// });
 
 
 // FirebaseDB Functions

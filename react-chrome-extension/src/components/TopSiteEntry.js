@@ -36,8 +36,8 @@ export default class TopSiteEntry extends Component {
 
     const Block = styled.div`
       border-radius: 10px;
-      width: 80%;
       display: inline;
+      width: 80%;
       color: #fff;
       padding: 10px;
       background-color: #666;

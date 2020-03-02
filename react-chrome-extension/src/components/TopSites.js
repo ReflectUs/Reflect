@@ -34,7 +34,7 @@ const TopSites = () => {
   });
 
   const Wrapper = styled.div`
-    border-radius: 20px;
+    border-radius: 12px;
     background-color: #888;
     opacity: 0.8;
     width: 200px;

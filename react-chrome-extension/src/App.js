@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Header from './components/Header';
 import Greeting from './components/Greeting';
 import TopSites from './components/TopSites';
+import Journal from './components/Journal';
 
 // can you animate this (fade-in) + cache the image for the day? 
 const BackgroundDiv = styled.div`
@@ -40,6 +41,7 @@ class App extends Component {
       <BackgroundDiv>
         {/* <Header/> */}
         <Greeting/>
+        <Journal/>
         <TopSites/>
       </BackgroundDiv>
     );
