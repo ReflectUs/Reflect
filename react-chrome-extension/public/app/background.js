@@ -254,7 +254,7 @@ function writeWebsiteData(userID, website, time) {
   let now = new Date().toLocaleString();
 
   timeRef.once("value", function(snapshot) {
-      let exists = snapshot.val() !== null;
+      let exists = snapshot.val() != null;
       let loggedIn = localStorage.getItem('uid');
       if(exists && (userID) && (loggedIn)) {
         let websiteTime = snapshot.val().time;
