@@ -12,10 +12,10 @@ const Journal = () => {
     background-color: #888;
     opacity: 0.8;
     width: 300px;
+    height: 290px;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: center;
     color: #fff;
     z-index: 1;
     position: absolute;

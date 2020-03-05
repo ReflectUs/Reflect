@@ -5,6 +5,7 @@ import { db } from "../firebase";
 
 const FormDiv = styled.form`
   border: none;
+  height: 65%;
   `;
 
 const StyledTextArea = styled.textarea`
@@ -15,6 +16,7 @@ const StyledTextArea = styled.textarea`
   background: transparent;
   color: #fff;
   margin: 10px;
+  height: 100%;
   ::placeholder,
   ::-webkit-textarea-placeholder {
     color: white;
@@ -50,11 +52,23 @@ export default class TextEntry extends Component {
   }
 
   handleSubmit(event) {
-    alert('Thoughts: ' + this.state.value);
-    // var entryRef = db.ref('entries/' + userID + "/" + test);
-    // entryRef.set({
-    //   entry: this.state.value
-    // });
+    let uid = localStorage.getItem("uid");
+    let date = (new Date()).toLocaleString().split(',')[0].replace(new RegExp('/','gi'), "-");
+    var entryRef = db.ref('entries/' + uid + "/" + date);
+    entryRef.once("value", (snapshot) => {
+      let exists = snapshot.val() != null;
+      if(exists) {
+        alert("You have already written something today");
+      } else {
+        entryRef.set({
+          entry: this.state.value
+        });
+      }
+      this.setState({
+        value: ""
+      });
+      alert("Your entry can be viewed at any time.")
+    });
     // TODO: fix this
     event.preventDefault();
   }
