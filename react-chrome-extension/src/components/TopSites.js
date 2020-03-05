@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 
 import TopSiteEntry from "./TopSiteEntry";
 import { db } from "../firebase";
@@ -34,7 +34,17 @@ const TopSites = () => {
   });
 
   const Wrapper = styled.div`
-    border-radius: 12px;
+    width: 100vw;
+    height: 15vh;
+    background: rgba(204, 204, 204, 0.6);
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    /* border-radius: 12px;
     background-color: #888;
     opacity: 0.8;
     width: 200px;
@@ -46,19 +56,20 @@ const TopSites = () => {
     z-index: 1;
     position: absolute;
     bottom: 20px;
-    right: 20px;
+    right: 20px; */
   `;
 
   return (
     <Wrapper>
       <h2
         style={{
-          opacity: "1"
+          color: 'white',
+          padding: '0 15px'
         }}
       >
         Top Sites{" "}
       </h2>
-      {topSites.reverse().slice(0,5).map(site => {
+      {topSites.reverse().slice(0,7).map(site => {
           return <TopSiteEntry site={site[1].website} time={site[1].time} />;
         })}
     </Wrapper>

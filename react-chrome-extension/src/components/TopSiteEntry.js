@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Row, Col } from "react-grid-system";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 export default class TopSiteEntry extends Component {
   constructor(props) {
@@ -36,23 +38,33 @@ export default class TopSiteEntry extends Component {
 
     const Block = styled.div`
       border-radius: 10px;
-      display: inline;
-      width: 80%;
+      /* display: flex;
+      flex-flow: column wrap; */
+      display: block;
+      height: 45px;
+      min-width: 120px;
       color: #fff;
       padding: 10px;
-      background-color: #666;
+      background: rgba(120, 120, 120, 0.7);
       opacity: 0.9;
       margin: 5px;
       z-index: 2;
-      span {
-        float: right;
+      div {
+        margin: 2px 10px;
       }
+    `;
+
+    const ChevronDiv = styled.div`
+      float: right;
     `;
 
     return (
         <Block>
-          {siteslice}
-          <span>{secondsToHms(time)}</span>
+          <div><b>{siteslice}</b></div>
+          <div>{secondsToHms(time)}</div>
+          <ChevronDiv>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </ChevronDiv>
         </Block>
     );
   }

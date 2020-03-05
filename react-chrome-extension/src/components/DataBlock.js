@@ -6,7 +6,7 @@ const BlockDiv = styled.div`
   border-radius: 15px;
   width: 200px;
   height: 10vh;
-  opacity: 0.8;
+  opacity: 1;
 `
 
 const TitleDiv = styled.div`

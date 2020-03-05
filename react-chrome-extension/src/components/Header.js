@@ -8,8 +8,7 @@ import DataBlock from "./DataBlock"
 const HeaderDiv = styled.div`
   width: 100vw;
   height: 15vh;
-  background-color: #CCC;
-  opacity: 0.4;
+  background: rgba(204, 204, 204, 0.6);
   padding: 0;
   margin: 0;
   position: absolute;

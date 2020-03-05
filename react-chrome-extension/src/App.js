@@ -40,9 +40,9 @@ class App extends Component {
     return (
       <BackgroundDiv>
         {/* <Header/> */}
+        <TopSites/>
         <Greeting/>
         <Journal/>
-        <TopSites/>
       </BackgroundDiv>
     );
   }
