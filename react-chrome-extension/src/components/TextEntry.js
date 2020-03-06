@@ -63,11 +63,11 @@ export default class TextEntry extends Component {
         entryRef.set({
           entry: this.state.value
         });
+        alert("Your entry can be viewed at any time.")
       }
       this.setState({
         value: ""
       });
-      alert("Your entry can be viewed at any time.")
     });
     // TODO: fix this
     event.preventDefault();
