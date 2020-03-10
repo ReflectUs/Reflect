@@ -10,7 +10,7 @@ export default class TopSiteEntry extends Component {
   }
 
   render() {
-    const { site, time } = this.props;
+    const { site, time, number } = this.props;
 
     let siteslice;
     if (site.length > 20) {
@@ -60,7 +60,7 @@ export default class TopSiteEntry extends Component {
 
     return (
         <Block>
-          <div><b>{siteslice}</b></div>
+          <div><b>{number + 1}. {siteslice}</b></div>
           <div>{secondsToHms(time)}</div>
           <ChevronDiv>
             <FontAwesomeIcon icon={faChevronDown} />

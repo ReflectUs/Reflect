@@ -18,10 +18,12 @@ const TopSites = () => {
   useEffect(() => {
     if (!recievedData) {
       let uid = localStorage.getItem("uid");
+      uid = "1hqpJYMdw5hCZtmzLAJRF4WzpFa2";
       let date = getMonday()
         .toLocaleString()
         .split(",")[0]
         .replace(new RegExp("/", "gi"), "-");
+      console.log("topSites/" + uid + "/" + date);
       db.ref("topSites/" + uid + "/" + date).once("value", function(snapshot) {
         setTopSites(Object.entries(snapshot.val()));
         setTopSites(topSites
@@ -69,8 +71,8 @@ const TopSites = () => {
       >
         Top Sites{" "}
       </h2>
-      {topSites.reverse().slice(0,7).map(site => {
-          return <TopSiteEntry site={site[1].website} time={site[1].time} />;
+      {topSites.reverse().slice(0,7).map((site, index) => {
+          return <TopSiteEntry key={index} site={site[1].website} time={site[1].time} number={index}/>;
         })}
     </Wrapper>
   );
