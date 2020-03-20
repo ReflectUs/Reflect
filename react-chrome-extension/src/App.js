@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import styled from 'styled-components'
+import PlusWhite from './assets/plusWhite.png'
+
 
 // components
 import Header from './components/Header';
 import Greeting from './components/Greeting';
 import TopSites from './components/TopSites';
 import Journal from './components/Journal';
+import Widgets from './components/Widgets';
 
 // can you animate this (fade-in) + cache the image for the day? 
 const BackgroundDiv = styled.div`
@@ -32,8 +35,9 @@ const BackgroundDiv = styled.div`
     opacity: 0.3;
     z-index: 0;
   }
-
 `
+
+
 
 class App extends Component {
   render() {
@@ -43,6 +47,7 @@ class App extends Component {
         <TopSites/>
         <Greeting/>
         <Journal/>
+        <Widgets/>
       </BackgroundDiv>
     );
   }
