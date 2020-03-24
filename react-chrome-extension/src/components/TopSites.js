@@ -18,7 +18,6 @@ const TopSites = () => {
   useEffect(() => {
     if (!recievedData) {
       let uid = localStorage.getItem("uid");
-      uid = "1hqpJYMdw5hCZtmzLAJRF4WzpFa2";
       let date = getMonday()
         .toLocaleString()
         .split(",")[0]
