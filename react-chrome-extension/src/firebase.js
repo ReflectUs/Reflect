@@ -11,7 +11,7 @@ let firebaseConfig = {
   storageBucket: "reflect-me-mhacks.appspot.com",
   messagingSenderId: "170827625182",
   appId: "1:170827625182:web:e9b87fea2dcbaa4b57084f",
-  scopes: ["profile", "email", "https://www.googleapis.com/auth/calendar"]
+  scopes: ["email", "profile", "https://www.googleapis.com/auth/calendar.events.readonly"]
 };
 
 let db, auth;
@@ -22,13 +22,13 @@ auth = firebase.auth();
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 GoogleAuthProvider.addScope(
-  "https://www.googleapis.com/auth/calendar"
+  "https://www.googleapis.com/auth/calendar.events.readonly"
 );
 
 // "https://www.googleapis.com/auth/calendar.events.readonly"
-GoogleAuthProvider.addScope(
-  "https://www.googleapis.com/auth/gmail.readonly"
-)
+// GoogleAuthProvider.addScope(
+//   "https://www.googleapis.com/auth/gmail.readonly"
+// )
 
 
 export { db, auth, GoogleAuthProvider };
