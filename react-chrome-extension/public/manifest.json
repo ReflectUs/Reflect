@@ -26,7 +26,7 @@
   "web_accessible_resources":[
     "/static/css/content.css"
   ],
-  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://apis.google.com; object-src 'self'",
   "oauth2": {
     "client_id": "170827625182-onf6agrqpr9hho54df32plic3sk9v6qe.apps.googleusercontent.com",
     "scopes": [

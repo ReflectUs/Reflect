@@ -27,34 +27,34 @@ function initApp() {
   // Listen for auth state changes.
   // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      var providerData = user.providerData;
-      console.log(user);
+    // if (user) {
+      // // User is signed in.
+      // var displayName = user.displayName;
+      // var email = user.email;
+      // var emailVerified = user.emailVerified;
+      // var photoURL = user.photoURL;
+      // var isAnonymous = user.isAnonymous;
+      // var uid = user.uid;
+      // var providerData = user.providerData;
+      // console.log(user);
 
-      // save to localStorage
-      localStorage.setItem('name', displayName);
-      localStorage.setItem('uid', uid);
+      // // save to localStorage
+      // localStorage.setItem('name', displayName);
+      // localStorage.setItem('uid', uid);
 
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
       document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
       // [END_EXCLUDE]
-    } else {
-      // Let's try to get a Google auth token programmatically.
-      // [START_EXCLUDE]
-      document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-      document.getElementById('quickstart-account-details').textContent = 'null';
-      // [END_EXCLUDE]
-    }
+    // } else {
+    //   // Let's try to get a Google auth token programmatically.
+    //   // [START_EXCLUDE]
+    //   document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
+    //   document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+    //   document.getElementById('quickstart-account-details').textContent = 'null';
+    //   // [END_EXCLUDE]
+    // }
     document.getElementById('quickstart-button').disabled = false;
   });
   // [END authstatelistener]
@@ -96,12 +96,13 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   document.getElementById('quickstart-button').disabled = true;
-  if (firebase.auth().currentUser) {
+  // if (firebase.auth().currentUser) {
     firebase.auth().signOut();
     localStorage.setItem('name', null);
+    localStorage.setItem('newName', null);
     localStorage.setItem('uid', null);
-  } else {
-    startAuth(true);
+  // } else {
+  //   startAuth(true);
   }
 }
 

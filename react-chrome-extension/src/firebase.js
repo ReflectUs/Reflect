@@ -14,11 +14,12 @@ let firebaseConfig = {
   scopes: ["email", "profile", "https://www.googleapis.com/auth/calendar.events.readonly"]
 };
 
-let db, auth;
+let db, auth, authFunc;
 
 firebase.initializeApp(firebaseConfig);
 db = firebase.database();
 auth = firebase.auth();
+authFunc = firebase.auth;
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 GoogleAuthProvider.addScope(
@@ -31,5 +32,5 @@ GoogleAuthProvider.addScope(
 // )
 
 
-export { db, auth, GoogleAuthProvider };
+export { db, auth, authFunc, GoogleAuthProvider };
 

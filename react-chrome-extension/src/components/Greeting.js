@@ -13,7 +13,7 @@ const Hello = styled.h1`
 `;
 export default class Header extends Component {
   render() {
-    let name = localStorage.getItem("name")
+    let name = localStorage.getItem("newName")
 
     return <Hello>Good Morning{name ? ', ' + name.split(" ")[0] + '!' : ""}</Hello>;
   }

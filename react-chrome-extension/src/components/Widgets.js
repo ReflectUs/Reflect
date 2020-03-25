@@ -20,10 +20,10 @@ export default class Widgets extends Component {
     const widgetInfo = this.state.widgetArray;
     // giveCalendarAccess(GoogleAuthProvider);
     console.log(GoogleAuthProvider);
-    console.log(localStorage.getItem("googleAuthToken"));
+    console.log(localStorage.getItem("newToken"));
     console.log(auth.currentUser.email);
 
-    let token = localStorage.getItem("googleAuthToken");
+    let token = localStorage.getItem("newToken");
     let url = `https://www.googleapis.com/calendar/v3/calendars/${auth.currentUser.email}/events?access_token=${token}`;
     console.log(url);
     fetch(url, {
