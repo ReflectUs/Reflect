@@ -36,6 +36,7 @@ function initApp() {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
+      console.log(user);
 
       // save to localStorage
       localStorage.setItem('name', displayName);
@@ -83,6 +84,7 @@ function startAuth(interactive) {
           });
         }
       });
+      localStorage.setItem("googleAuthToken", token);
     } else {
       console.error('The OAuth Token was null');
     }

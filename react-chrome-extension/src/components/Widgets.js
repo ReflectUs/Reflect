@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Plus from '../assets/plusWhite.png'
 import WidgetEntry from './WidgetEntry';
 import styled from 'styled-components'
+import { auth, GoogleAuthProvider } from "../firebase"
+// import { giveCalendarAccess } from "../GoogleAuth"
 
 export default class Widgets extends Component {
 
@@ -16,7 +18,23 @@ export default class Widgets extends Component {
 
   createWidget() {
     const widgetInfo = this.state.widgetArray;
-    const label1 = 'Stuff';
+    // giveCalendarAccess(GoogleAuthProvider);
+    console.log(GoogleAuthProvider);
+    console.log(localStorage.getItem("googleAuthToken"));
+    console.log(auth.currentUser.email);
+
+    let token = localStorage.getItem("googleAuthToken");
+    let url = `https://www.googleapis.com/calendar/v3/calendars/${auth.currentUser.email}/events?access_token=${token}`;
+    console.log(url);
+    fetch(url, {
+      method: "GET"
+    }).then(function(response) {
+      response.json().then(function(data) {
+        console.log(data);
+      });
+    });
+
+    const label1 = 'Calendar';
     const num1 = 5;
     const label2 = 'Other Stuff'
     const num2 = 10;
