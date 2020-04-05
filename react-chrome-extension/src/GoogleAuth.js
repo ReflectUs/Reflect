@@ -5,14 +5,25 @@ export const doGoogleSignIn = () => {
   provider.addScope(
     "https://www.googleapis.com/auth/calendar.events.readonly"
   );
+  provider.addScope(
+    "https://www.googleapis.com/auth/userinfo.email"
+  );
   auth.signInWithPopup(provider).then(function(result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
+    console.log(result);
     var token = result.credential.accessToken;
     // The signed-in user info.
     var user = result.user;
+    var refreshToken = user.refreshToken;
+    console.log(user);
     localStorage.setItem("newToken", token);
     localStorage.setItem("uid", user.uid);
     localStorage.setItem("newName", user.displayName);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("lastTokenTime", (new Date()).getTime());
+    // user.getToken().then(function(accessToken) {
+    //   console.log(accessToken);
+    // });
     createUser(user);
     // ...
   }).catch(function(error) {
