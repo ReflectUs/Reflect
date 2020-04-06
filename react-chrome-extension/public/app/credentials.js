@@ -3,9 +3,9 @@
 
 // using Reflectme database
 var config = {
-  apiKey: 'AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ',
-  databaseURL: 'https://reflect-me-mhacks.firebaseio.com',
-  storageBucket: 'reflect-me-mhacks.appspot.com'
+  apiKey: "AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ",
+  databaseURL: "https://reflect-me-mhacks.firebaseio.com",
+  storageBucket: "reflect-me-mhacks.appspot.com",
 };
 firebase.initializeApp(config);
 
@@ -26,27 +26,33 @@ firebase.initializeApp(config);
 function initApp() {
   // Listen for auth state changes.
   // [START authstatelistener]
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      alert("You signed in bro");
+    } else {
+      alert("you not signed in bro");
+    }
+
     // if (user) {
-      // // User is signed in.
-      // var displayName = user.displayName;
-      // var email = user.email;
-      // var emailVerified = user.emailVerified;
-      // var photoURL = user.photoURL;
-      // var isAnonymous = user.isAnonymous;
-      // var uid = user.uid;
-      // var providerData = user.providerData;
-      // console.log(user);
+    // // User is signed in.
+    // var displayName = user.displayName;
+    // var email = user.email;
+    // var emailVerified = user.emailVerified;
+    // var photoURL = user.photoURL;
+    // var isAnonymous = user.isAnonymous;
+    // var uid = user.uid;
+    // var providerData = user.providerData;
+    // console.log(user);
 
-      // // save to localStorage
-      // localStorage.setItem('name', displayName);
-      // localStorage.setItem('uid', uid);
+    // // save to localStorage
+    // localStorage.setItem('name', displayName);
+    // localStorage.setItem('uid', uid);
 
-      // [START_EXCLUDE]
-      document.getElementById('quickstart-button').textContent = 'Sign out';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
-      // [END_EXCLUDE]
+    // [START_EXCLUDE]
+    // document.getElementById('quickstart-button').textContent = 'Sign out';
+    // document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+    // document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+    // [END_EXCLUDE]
     // } else {
     //   // Let's try to get a Google auth token programmatically.
     //   // [START_EXCLUDE]
@@ -55,11 +61,13 @@ function initApp() {
     //   document.getElementById('quickstart-account-details').textContent = 'null';
     //   // [END_EXCLUDE]
     // }
-    document.getElementById('quickstart-button').disabled = false;
+    // document.getElementById('quickstart-button').disabled = false;
   });
   // [END authstatelistener]
 
-  document.getElementById('quickstart-button').addEventListener('click', startSignIn, false);
+  document
+    .getElementById("signInButton")
+    .addEventListener("click", startSignIn, false);
 }
 
 /**
@@ -68,25 +76,52 @@ function initApp() {
  */
 function startAuth(interactive) {
   // Request an OAuth token from the Chrome Identity API.
-  chrome.identity.getAuthToken({interactive: !!interactive}, function(token) {
+  chrome.identity.getAuthToken({ interactive: !!interactive }, function (
+    token
+  ) {
     if (chrome.runtime.lastError && !interactive) {
-      console.log('It was not possible to get a token programmatically.');
-    } else if(chrome.runtime.lastError) {
+      console.log("It was not possible to get a token programmatically.");
+    } else if (chrome.runtime.lastError) {
       console.error(chrome.runtime.lastError);
     } else if (token) {
       // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
-      firebase.auth().signInWithCredential(credential).catch(function(error) {
-        // The OAuth token might have been invalidated. Lets' remove it from cache.
-        if (error.code === 'auth/invalid-credential') {
-          chrome.identity.removeCachedAuthToken({token: token}, function() {
-            startAuth(interactive);
-          });
-        }
+      firebase
+        .auth()
+        .signInWithCredential(credential)
+        .catch(function (error) {
+          // The OAuth token might have been invalidated. Lets' remove it from cache.
+          if (error.code === "auth/invalid-credential") {
+            chrome.identity.removeCachedAuthToken(
+              { token: token },
+              function () {
+                startAuth(interactive);
+              }
+            );
+          }
+        });
+      let init = {
+        method: "GET",
+        async: true,
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        contentType: "json",
+      };
+      let apiKey = "AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ";
+      let url =
+        "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=2020-03-25T10:00:00-00:00&timeMin=2020-03-22T10:00:00-00:00&key=" +
+        apiKey;
+      fetch(url, init).then(function (response) {
+        console.log(response);
+        response.json().then(function (data) {
+          console.log(data);
+        });
       });
       localStorage.setItem("googleAuthToken", token);
     } else {
-      console.error('The OAuth Token was null');
+      console.error("The OAuth Token was null");
     }
   });
 }
@@ -95,17 +130,19 @@ function startAuth(interactive) {
  * Starts the sign-in process.
  */
 function startSignIn() {
-  document.getElementById('quickstart-button').disabled = true;
+  // document.getElementById('signInButton').disabled = true;
+  console.log("StartSignIn");
   // if (firebase.auth().currentUser) {
-    firebase.auth().signOut();
-    localStorage.setItem('name', null);
-    localStorage.setItem('newName', null);
-    localStorage.setItem('uid', null);
+  //   firebase.auth().signOut();
+  //   localStorage.setItem('name', null);
+  //   localStorage.setItem('newName', null);
+  //   localStorage.setItem('uid', null);
   // } else {
   //   startAuth(true);
-  }
+  // }
+  startAuth(true);
 }
 
-window.onload = function() {
+window.onload = function () {
   initApp();
 };

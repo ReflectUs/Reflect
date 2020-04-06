@@ -41,6 +41,12 @@ const BackgroundDiv = styled.div`
 
 
 class App extends Component {
+
+  // componentDidMount() {
+  //   gapi.load('client:auth2', function() {
+  //     /* Ready. Make a call to gapi.auth2.init or some other API */
+  //   });
+  // }
   render() {
     return (
       <Top/>
