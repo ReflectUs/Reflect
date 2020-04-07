@@ -9,6 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var db = firebase.database();
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -29,6 +30,7 @@ function initApp() {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       alert("You signed in bro");
+      localStorage.setItem('uid', user.uid);
     } else {
       alert("you not signed in bro");
     }
@@ -100,26 +102,9 @@ function startAuth(interactive) {
             );
           }
         });
-      let init = {
-        method: "GET",
-        async: true,
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-        contentType: "json",
-      };
-      let apiKey = "AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ";
-      let url =
-        "https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=2020-03-25T10:00:00-00:00&timeMin=2020-03-22T10:00:00-00:00&key=" +
-        apiKey;
-      fetch(url, init).then(function (response) {
-        console.log(response);
-        response.json().then(function (data) {
-          console.log(data);
-        });
-      });
       localStorage.setItem("googleAuthToken", token);
+      getTopSites(); // try moving this to onAuthStateChanged
+      getCalendarData();
     } else {
       console.error("The OAuth Token was null");
     }
@@ -146,3 +131,65 @@ function startSignIn() {
 window.onload = function () {
   initApp();
 };
+
+
+// ___________________________________________
+
+
+//    Start Data Collection Functions
+
+// ___________________________________________
+
+
+function getTopSites() {
+  let uid = localStorage.getItem('uid');
+  let date = getMonday()
+        .toLocaleString()
+        .split(",")[0]
+        .replace(new RegExp("/", "gi"), "-");
+      console.log("topSites/" + uid + "/" + date);
+      db.ref("topSites/" + uid + "/" + date).once("value", function(snapshot) {
+        console.log(snapshot.val());
+        localStorage.setItem('topSites', JSON.stringify(Object.entries(snapshot.val())
+        .sort(function(a, b) {
+          return a[1].time - b[1].time;
+        }).reverse().slice(0,7)));
+      });
+}
+
+function getMonday() {
+  let d = new Date();
+  var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1); 
+  d.setDate(diff);
+  return new Date(d.setHours(0,0,0));
+}
+
+function getCalendarData() {
+  chrome.identity.getAuthToken({ interactive: false }, function (
+    token
+  ) {
+    let init = {
+      method: "GET",
+      async: true,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      contentType: "json",
+    };
+    // seems like don't need apiKey in request
+    // let apiKey = "AIzaSyAXLZRCJb7YTB-l6yqJAGZGOaIn9zSDPJQ";
+    let monday = getMonday().toISOString();
+    let now = (new Date()).toISOString();
+    let url =
+      `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMax=${now}&timeMin=${monday}`;//&key=${apiKey}
+    fetch(url, init).then(function (response) {
+      response.json().then(function (data) {
+
+        // Do data analysis
+        console.log(data);
+      });
+    });
+  });
+}

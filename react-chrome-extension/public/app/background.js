@@ -243,27 +243,32 @@ function getMonday() {
   let d = new Date();
   var day = d.getDay(),
       diff = d.getDate() - day + (day == 0 ? -6:1); 
-  return new Date(d.setDate(diff));
+  d.setDate(diff);
+  return new Date(d.setHours(0,0,0));
 }
 
 
 function writeWebsiteData(userID, website, time) {
   let date = getMonday().toLocaleString().split(',')[0].replace(new RegExp('/','gi'), "-");
   let websiteRef = website.replace(new RegExp("[.]","gi"), "-");
-  var timeRef = firebase.database().ref('topSites/' + userID + "/" + date + "/" + websiteRef);
+  var loggedIn = localStorage.getItem('uid');
+  var timeRef = firebase.database().ref('topSites/' + loggedIn + "/" + date + "/" + websiteRef);
   let now = new Date().toLocaleString();
+  console.log("Writing website Data");
 
   timeRef.once("value", function(snapshot) {
       let exists = snapshot.val() != null;
-      let loggedIn = localStorage.getItem('uid');
-      if(exists && (userID) && (loggedIn)) {
+      console.log(exists);
+      console.log(loggedIn);
+      if(exists && (loggedIn)) { // && userID
         let websiteTime = snapshot.val().time;
         timeRef.set({
           website: website,
           time: websiteTime+time, 
           lastUpdated: now
        });
-    } else if((userID) && (loggedIn)) {
+    } else if(loggedIn) { // && userID
+      console.log("We made it");
       timeRef.set({
         website: website,
         time: time, 
