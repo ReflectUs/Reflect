@@ -29,8 +29,9 @@ function initApp() {
   // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      alert("You signed in bro");
       localStorage.setItem('uid', user.uid);
+      getTopSites();
+      localStorage.setItem('newName', user.displayName);
     } else {
       alert("you not signed in bro");
     }
@@ -103,7 +104,6 @@ function startAuth(interactive) {
           }
         });
       localStorage.setItem("googleAuthToken", token);
-      getTopSites(); // try moving this to onAuthStateChanged
       getCalendarData();
     } else {
       console.error("The OAuth Token was null");
